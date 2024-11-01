@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-server
+  template:
+    metadata:
+      labels:
+        app: node-server
+    spec:
+      containers:
+      - name: node-server
+        image: salvadoruriel/clients-back-mock:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3041
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-server-service
+spec:
+  # ClusterIP makes this service internal to the cluster
+  type: LoadBalancer
+  selector:
+    app: node-server
+  ports:
+    - protocol: TCP
+      port: 3041
+      targetPort: 3041
+  externalIPs:
+  - 140.112.16.173
+    #our machine/server's ip

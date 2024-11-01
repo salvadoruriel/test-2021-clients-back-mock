@@ -1,0 +1,4 @@
+.dockerignore
+node-server.yaml
+**/.git
+**/node_modules

@@ -9,7 +9,7 @@ const port = process.env.PORT || 3041;
 app.use(express.json()); // for parsing application/json
 app.use(
 	cors({
-		origin: "http://localhost:3000", // Replace with your frontend server's URL
+		origin: "http://localhost:3040", // Replace with your frontend server's URL
 	})
 );
 
@@ -35,9 +35,9 @@ app.get("/groups/:name", (req, res) => {
 
 // GET employees from a group
 app.get("/employees/:name/getByGroup", (req, res) => {
-	const groupId = req.query.id;
+	const groupId = Number(req.query.id);
 	if (!groupId || typeof groupId !== "number" || isNaN(Number(groupId))) {
-		return res.status(400).json({ message: "Invalid id" });
+		return res.status(400).json({ message: `Invalid id ${groupId}` });
 	}
 	const found = MOCK_EMPLOYEES.filter((val, idx) => val.group_id === groupId);
 	sendRes(res, 200, { employees: found });
